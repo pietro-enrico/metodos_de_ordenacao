@@ -4,7 +4,9 @@ project(metodos_de_ordenacao C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(metodos_de_ordenacao
-        src/bubble-sort.c
-        src/merge-sort.c
-        src/quick-sort.c
-        main.c)
+        main.c
+        src/menu.c
+        src/algoritmos/bubble-sort.c
+        src/algoritmos/merge-sort.c
+        src/algoritmos/quick-sort.c
+)
