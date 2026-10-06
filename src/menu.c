@@ -16,11 +16,16 @@ static int validarEntrada() {
     return 1;
 }
 
+void limparTela() {
+    system("@cls || clear");
+}
+
 int menuPasso1(OpcoesMenu *opcoesMenu) {
     // Passo 1
+    limparTela();
 
     // Opções do Menu
-    printf("\nOlá, seja bem vindo!");
+    printf("Olá, seja bem vindo!");
     printf("\n[PASSO 1] Escolha abaixo o Método de Ordenação que deseja executar: ");
     printf("\n\n[1] - Bubble Sort");
     printf("\n[2] - Merge Sort");
@@ -55,8 +60,9 @@ int menuPasso1(OpcoesMenu *opcoesMenu) {
 
 int menuPasso2(OpcoesMenu *opcoesMenu) {
     // Passo 2
+    limparTela();
 
-    printf("\n[PASSO 2] Escolha o tamanho do array a se testar: ");
+    printf("[PASSO 2] Escolha o tamanho do array a se testar: ");
     printf("\n\n[1] - 1000");
     printf("\n[2] - 5000");
     printf("\n[3] - 10000");
@@ -81,7 +87,7 @@ int menuPasso2(OpcoesMenu *opcoesMenu) {
             break;
         case 5:
             int tamanho;
-            printf("\nDigite o tamanho específico de array que deseja gerar: ");
+            printf("\n> Digite o tamanho específico de array que deseja gerar: ");
             if (scanf("%d", &tamanho) != 1) {
                 printf("\nOpção Inválida!");
                 exit(1);
@@ -100,8 +106,9 @@ int menuPasso2(OpcoesMenu *opcoesMenu) {
 
 int menuPasso3(OpcoesMenu *opcoesMenu) {
     // Passo 3
+    limparTela();
 
-    printf("\n[PASSO 3] Criar array com duplicidade de números? (15%%): ");
+    printf("[PASSO 3] Criar array com duplicidade de números? (15%%): ");
     printf("\n\n[1] - Sim");
     printf("\n[2] - Não");
 
@@ -124,8 +131,9 @@ int menuPasso3(OpcoesMenu *opcoesMenu) {
 
 int menuPasso4(OpcoesMenu *opcoesMenu) {
     // Passo 4
+    limparTela();
 
-    printf("\n[PASSO 4] Selecione agora a disposição de como o array será criado: ");
+    printf("[PASSO 4] Selecione agora a disposição de como o array será criado: ");
     printf("\n\n[1] - CRESCENTE");
     printf("\n[2] - DECRESCENTE");
     printf("\n[3] - ALEATÓRIO");
@@ -159,6 +167,8 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
     // TODO - Gerar array e utilizar algoritmo de ordenação (ainda a se fazer) no qual foi escolhido para a execução da análise + temporizador
 
     int *array = gerarArray(opcoesMenu->tamanho, opcoesMenu->duplicidade, opcoesMenu->disposicao);
+
+    limparTela();
 
     printf("[\n");
     for (int i = 0; i < opcoesMenu->tamanho; i++) {

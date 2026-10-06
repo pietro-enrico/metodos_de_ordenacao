@@ -18,5 +18,6 @@ typedef struct OpcoesMenu {
 } OpcoesMenu;
 
 int menuMain(void);
+void limparTela();
 
 #endif
