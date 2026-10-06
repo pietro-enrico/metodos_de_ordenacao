@@ -21,7 +21,7 @@ int menuPasso1(OpcoesMenu *opcoesMenu) {
 
     // Opções do Menu
     printf("\nOlá, seja bem vindo!");
-    printf("\n[PASSO 1] Escolha abaixo o Método que deseja executar: ");
+    printf("\n[PASSO 1] Escolha abaixo o Método de Ordenação que deseja executar: ");
     printf("\n\n[1] - Bubble Sort");
     printf("\n[2] - Merge Sort");
     printf("\n[3] - Quick Sort");
@@ -32,15 +32,12 @@ int menuPasso1(OpcoesMenu *opcoesMenu) {
     //Respostas do Menu
     switch (opcao) {
         case 1:
-            printf("\nMetodo Bubble Sort\n");
             opcoesMenu->algoritmo = BUBBLE_SORT;
             break;
         case 2:
-            printf("\nMetodo Merge Sort\n");
             opcoesMenu->algoritmo = MERGE_SORT;
             break;
         case 3:
-            printf("\nMetodo Quick Sort\n");
             opcoesMenu->algoritmo = QUICK_SORT;
             break;
         case 4:
@@ -48,7 +45,7 @@ int menuPasso1(OpcoesMenu *opcoesMenu) {
             printf("\nFinalizando...");
             return 0;
         default:
-            printf("\nOpcao invalida!");
+            printf("\nOpção Inválida!");
             printf("\nFinalizando...");
             return 0;
     }
@@ -84,7 +81,7 @@ int menuPasso2(OpcoesMenu *opcoesMenu) {
             break;
         case 5:
             int tamanho;
-            printf("\nDigite o tamanho especifico de array que deseja criar: ");
+            printf("\nDigite o tamanho específico de array que deseja gerar: ");
             if (scanf("%d", &tamanho) != 1) {
                 printf("\nOpção Inválida!");
                 exit(1);
@@ -185,7 +182,7 @@ int menuMain(void) {
     OpcoesMenu *opcoesMenu = malloc(sizeof(OpcoesMenu));
 
     if (opcoesMenu == NULL) {
-        printf("\nErro ao alocar memoria");
+        printf("\nErro ao alocar memória");
         free(opcoesMenu);
         return 1;
     }
