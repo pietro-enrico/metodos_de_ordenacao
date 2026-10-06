@@ -5,8 +5,11 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(metodos_de_ordenacao
         main.c
+        src/array.c
         src/menu.c
         src/algoritmos/bubble-sort.c
         src/algoritmos/merge-sort.c
         src/algoritmos/quick-sort.c
+        src/headers/array.h
+        src/headers/menu.h
 )
