@@ -13,3 +13,5 @@ add_executable(metodos_de_ordenacao
         src/headers/array.h
         src/headers/menu.h
 )
+
+add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8>" "$<$<CXX_COMPILER_ID:GNU>:-fexec-charset=UTF-8>")
