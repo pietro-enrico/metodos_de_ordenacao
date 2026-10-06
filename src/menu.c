@@ -57,6 +57,8 @@ int menuPasso1(OpcoesMenu *opcoesMenu) {
 }
 
 int menuPasso2(OpcoesMenu *opcoesMenu) {
+    // Passo 2
+
     printf("\n[PASSO 2] Escolha o tamanho do array a se testar: ");
     printf("\n\n[1] - 1000");
     printf("\n[2] - 5000");
@@ -100,6 +102,8 @@ int menuPasso2(OpcoesMenu *opcoesMenu) {
 }
 
 int menuPasso3(OpcoesMenu *opcoesMenu) {
+    // Passo 3
+
     printf("\n[PASSO 3] Criar array com duplicidade de números? (15%%): ");
     printf("\n\n[1] - Sim");
     printf("\n[2] - Não");
@@ -122,6 +126,8 @@ int menuPasso3(OpcoesMenu *opcoesMenu) {
 }
 
 int menuPasso4(OpcoesMenu *opcoesMenu) {
+    // Passo 4
+
     printf("\n[PASSO 4] Selecione agora a disposição de como o array será criado: ");
     printf("\n\n[1] - CRESCENTE");
     printf("\n[2] - DECRESCENTE");
@@ -170,6 +176,7 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
     printf("]\n");
 
     free(array);
+    free(opcoesMenu);
     return 0;
 }
 

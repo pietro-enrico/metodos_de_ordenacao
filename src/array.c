@@ -1,9 +1,10 @@
-#include "headers/array.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+
+#include "headers/array.h"
 
 // Verifica se um número já existe no array
 bool numeroExiste(int array[], int tamanho, int numero)
