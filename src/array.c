@@ -146,15 +146,25 @@ int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
         case CONCAVA:
             for (int i = 0; i < tamanho; i++)
             {
-                double x = (double)i / (tamanho - 1);
+                double x;
 
-                double formato = 4 * x * (1 - x);
+                if (tamanho == 1)
+                {
+                    x = 0.5;
+                }
+                else
+                {
+                    x = (double)i / (tamanho - 1);
+                }
+
+                // 0 -> 1.000.000 -> 0
+                double formato = 4.0 * x * (1.0 - x);
 
                 array[i] = (int)(formato * 1000000);
 
-                if (duplicidade)
+                if (duplicidade && i > 0 && rand() % 100 < CHANCE_DUPLICIDADE)
                 {
-                    array[i] += rand() % 100;
+                    array[i] = array[i - 1];
                 }
             }
 
@@ -163,15 +173,25 @@ int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
         case CONVEXA:
             for (int i = 0; i < tamanho; i++)
             {
-                double x = (double)i / (tamanho - 1);
+                double x;
 
-                double formato = 4 * (x - 0.5) * (x - 0.5);
+                if (tamanho == 1)
+                {
+                    x = 0.5;
+                }
+                else
+                {
+                    x = (double)i / (tamanho - 1);
+                }
+
+                // 1.000.000 -> 0 -> 1.000.000
+                double formato = 4.0 * (x - 0.5) * (x - 0.5);
 
                 array[i] = (int)(formato * 1000000);
 
-                if (duplicidade)
+                if (duplicidade && i > 0 && rand() % 100 < CHANCE_DUPLICIDADE)
                 {
-                    array[i] += rand() % 100;
+                    array[i] = array[i - 1];
                 }
             }
 
