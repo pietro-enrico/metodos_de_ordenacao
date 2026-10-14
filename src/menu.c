@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "headers/menu.h"
+#include "headers/labels-filters.h"
 
 static int opcao;
 
@@ -167,7 +168,7 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
 
     int *array = gerarArray(opcoesMenu->tamanho, opcoesMenu->duplicidade, opcoesMenu->disposicao);
 
-    // Temporizador: mede apenas o tempo de execução do algoritmo de ordenação
+    // Métrica: mede a quantidade de operações realizadas para ordernar e o tempo de execução do algoritmo de ordenação
     // QueryPerformanceCounter tem resolução de microssegundos (clock() no Windows só mede em ms)
     LARGE_INTEGER frequencia, inicio, fim;
     QueryPerformanceFrequency(&frequencia);
@@ -202,9 +203,16 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
 
     printf("]\n");
 
-    printf("\nTempo de ordenação: %.3f ms (%.6f s)\n", tempoMs, tempoMs / 1000.0);
+    printf("\nAlgoritmo: %s", formatarLabelAlgoritmo(opcoesMenu->algoritmo));
+    printf("\nQuantidade de Números: %d", opcoesMenu->tamanho);
+    printf("\nDuplicidade: %s", formatarLabelDuplicidade(opcoesMenu->duplicidade));
+    printf("\nDisposição: %s", formatarLabelDisposicao(opcoesMenu->disposicao));
+
+    printf("\n\nTempo de ordenação: %.3f ms (%.6f s)\n", tempoMs, tempoMs / 1000.0);
 
     free(array);
+    array = NULL;
+
     return 0;
 }
 
@@ -241,5 +249,7 @@ int menuMain(void) {
     }
 
     free(opcoesMenu);
+    opcoesMenu = NULL;
+
     return 0;
 }

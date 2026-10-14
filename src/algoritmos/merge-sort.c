@@ -70,4 +70,5 @@ void mergeSort(int array[], int tamanho)
     mergeSortRecursivo(array, auxiliar, 0, tamanho - 1);
 
     free(auxiliar);
+    auxiliar = NULL;
 }
