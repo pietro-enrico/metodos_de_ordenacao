@@ -17,6 +17,10 @@ typedef struct OpcoesMenu {
     Disposicao disposicao;
 } OpcoesMenu;
 
+void bubbleSort(int array[], int tamanho);
+void mergeSort(int array[], int tamanho);
+void quickSort(int array[], int tamanho);
+
 int menuMain(void);
 void limparTela();
 
