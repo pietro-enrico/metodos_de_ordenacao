@@ -20,11 +20,11 @@ const char* formatarLabelAlgoritmo(Algoritmo tipo_algoritmo) {
 }
 
 const char* formatarLabelDuplicidade(bool duplicidade) {
-    switch (duplicidade) {
-        case FALSE:
+    switch ((int)(duplicidade)) {
+        case 0:
             return "Não";
             break;
-        case TRUE:
+        case 1:
             return "Sim";
             break;
         default:
