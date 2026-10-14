@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../headers/metrics.h"
+
 // Intercala as metades já ordenadas array[inicio..meio] e array[meio+1..fim]
 static void intercalar(int array[], int auxiliar[], int inicio, int meio, int fim)
 {
@@ -11,6 +13,7 @@ static void intercalar(int array[], int auxiliar[], int inicio, int meio, int fi
 
     while (i <= meio && j <= fim)
     {
+        registrarComparacao();
         // "<=" mantém a ordenação estável (iguais preservam a ordem original)
         if (array[i] <= array[j])
         {
@@ -20,19 +23,24 @@ static void intercalar(int array[], int auxiliar[], int inicio, int meio, int fi
         {
             auxiliar[k++] = array[j++];
         }
+        registrarMovimentacao(1);
     }
 
     while (i <= meio)
     {
         auxiliar[k++] = array[i++];
+        registrarMovimentacao(1);
     }
 
     while (j <= fim)
     {
         auxiliar[k++] = array[j++];
+        registrarMovimentacao(1);
     }
 
     memcpy(&array[inicio], &auxiliar[inicio], (fim - inicio + 1) * sizeof(int));
+
+    registrarMovimentacao((unsigned long long)(fim - inicio + 1));
 }
 
 // Divide recursivamente o intervalo array[inicio..fim] e intercala as metades

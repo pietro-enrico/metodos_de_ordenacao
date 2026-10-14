@@ -222,8 +222,7 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
             break;
     }
 
-    double tempoMs = finalizarMetrificacao();
-
+    finalizarMetrificacao();
     imprimirArrayOrdenado(array, opcoesMenu->tamanho);
 
     printf("\nAlgoritmo: %s", formatarLabelAlgoritmo(opcoesMenu->algoritmo));
@@ -231,10 +230,17 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
     printf("\nDuplicidade: %s", formatarLabelDuplicidade(opcoesMenu->duplicidade));
     printf("\nDisposição: %s", formatarLabelDisposicao(opcoesMenu->disposicao));
 
-    printf("\n\nTempo de execução: %.4f ms (%.6f s)\n", tempoMs, tempoMs / 1000.0);
+    Metricas metricas = obterMetricas();
 
-    // TODO - Adicionar quantidade de trocas/processamentos até o fim da ordenação
-    // TODO - Adicionar funcionalidade de exportação das métricas de ordenação para o excel dentro do respositório
+    printf("\n\n========= MÉTRICAS DE ORDENAÇÃO =========\n");
+    printf("\nTempo de execução: %.4f ms (%.6f s)", metricas.tempoDecorridoMs, metricas.tempoDecorridoMs / 1000.0);
+    printf("\nQuantidade de Comparações: %llu", metricas.comparacoes);
+    printf("\nQuantidade de Movimentações: %llu", metricas.movimentacoes);
+    printf("\nQuantidade de Trocas: %llu\n", metricas.trocas);
+
+    // TODO(13/10/2026) - Adicionar quantidade de trocas/processamentos até o fim da ordenação -- Fase de Testes
+    // TODO(13/10/2026) - Adicionar funcionalidade de exportação das métricas de ordenação para o excel dentro do respositório
+    // TODO(14/10/2026) - Trocar ints para unsigned long long, com maior capacidade de bytes • unsigned long long (64 bits sem sinal): 18.446.744.073.709.551.615 (ULLONG_MAX)
 
     free(array);
     array = NULL;
