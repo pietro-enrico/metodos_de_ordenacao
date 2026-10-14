@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
 #include "headers/menu.h"
 
@@ -164,9 +165,28 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
             return 0;
     }
 
-    // TODO - Gerar array e utilizar algoritmo de ordenação (ainda a se fazer) no qual foi escolhido para a execução da análise + temporizador
-
     int *array = gerarArray(opcoesMenu->tamanho, opcoesMenu->duplicidade, opcoesMenu->disposicao);
+
+    // Temporizador: mede apenas o tempo de execução do algoritmo de ordenação
+    // QueryPerformanceCounter tem resolução de microssegundos (clock() no Windows só mede em ms)
+    LARGE_INTEGER frequencia, inicio, fim;
+    QueryPerformanceFrequency(&frequencia);
+    QueryPerformanceCounter(&inicio);
+
+    switch (opcoesMenu->algoritmo) {
+        case BUBBLE_SORT:
+            bubbleSort(array, opcoesMenu->tamanho);
+            break;
+        case MERGE_SORT:
+            mergeSort(array, opcoesMenu->tamanho);
+            break;
+        case QUICK_SORT:
+            quickSort(array, opcoesMenu->tamanho);
+            break;
+    }
+
+    QueryPerformanceCounter(&fim);
+    double tempoMs = (double)(fim.QuadPart - inicio.QuadPart) * 1000.0 / (double)frequencia.QuadPart;
 
     limparTela();
 
@@ -182,8 +202,9 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
 
     printf("]\n");
 
+    printf("\nTempo de ordenação: %.3f ms (%.6f s)\n", tempoMs, tempoMs / 1000.0);
+
     free(array);
-    free(opcoesMenu);
     return 0;
 }
 
