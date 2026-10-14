@@ -4,6 +4,7 @@
 
 #include "headers/menu.h"
 #include "headers/labels-filters.h"
+#include "headers/metrics.h"
 
 static int opcao;
 
@@ -20,6 +21,44 @@ static int validarEntrada() {
 
 void limparTela() {
     system("@cls || clear");
+}
+
+static void imprimirArrayOrdenado(const int * array, int tamanho_array) {
+    limparTela();
+
+    size_t capacidade = (size_t)tamanho_array * 12 + 4;
+    char *buffer = malloc(capacidade);
+
+    if (buffer == NULL)
+    {
+        printf("Erro ao alocar memoria para impressao.\n");
+        return;
+    }
+
+    size_t posicao = 0;
+
+    posicao += snprintf(buffer + posicao, capacidade - posicao, "[ ");
+
+    for (int i = 0; i < tamanho_array; i++)
+    {
+        posicao += snprintf(
+            buffer + posicao,
+            capacidade - posicao,
+            "%d%s",
+            array[i],
+            i < tamanho_array - 1 ? ", " : " "
+        );
+    }
+
+    posicao += snprintf(
+    buffer + posicao,
+    capacidade - posicao,
+    "]\n");
+
+    fwrite(buffer, 1, posicao, stdout);
+
+    free(buffer);
+    buffer = NULL;
 }
 
 int menuPasso1(OpcoesMenu *opcoesMenu) {
@@ -169,46 +208,33 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
     int *array = gerarArray(opcoesMenu->tamanho, opcoesMenu->duplicidade, opcoesMenu->disposicao);
 
     // Métrica: mede a quantidade de operações realizadas para ordernar e o tempo de execução do algoritmo de ordenação
-    // QueryPerformanceCounter tem resolução de microssegundos (clock() no Windows só mede em ms)
-    LARGE_INTEGER frequencia, inicio, fim;
-    QueryPerformanceFrequency(&frequencia);
-    QueryPerformanceCounter(&inicio);
+    iniciarMetrificacao();
 
     switch (opcoesMenu->algoritmo) {
         case BUBBLE_SORT:
-            bubbleSort(array, opcoesMenu->tamanho);
+            array = bubbleSort(array, opcoesMenu->tamanho);
             break;
         case MERGE_SORT:
-            mergeSort(array, opcoesMenu->tamanho);
+            array = mergeSort(array, opcoesMenu->tamanho);
             break;
         case QUICK_SORT:
-            quickSort(array, opcoesMenu->tamanho);
+            array = quickSort(array, opcoesMenu->tamanho);
             break;
     }
 
-    QueryPerformanceCounter(&fim);
-    double tempoMs = (double)(fim.QuadPart - inicio.QuadPart) * 1000.0 / (double)frequencia.QuadPart;
+    double tempoMs = finalizarMetrificacao();
 
-    limparTela();
-
-    printf("[\n");
-    for (int i = 0; i < opcoesMenu->tamanho; i++) {
-        printf("%d", array[i]);
-
-        if (i < opcoesMenu->tamanho - 1) {
-            printf(", ");
-        }
-        printf("\n");
-    }
-
-    printf("]\n");
+    imprimirArrayOrdenado(array, opcoesMenu->tamanho);
 
     printf("\nAlgoritmo: %s", formatarLabelAlgoritmo(opcoesMenu->algoritmo));
     printf("\nQuantidade de Números: %d", opcoesMenu->tamanho);
     printf("\nDuplicidade: %s", formatarLabelDuplicidade(opcoesMenu->duplicidade));
     printf("\nDisposição: %s", formatarLabelDisposicao(opcoesMenu->disposicao));
 
-    printf("\n\nTempo de ordenação: %.3f ms (%.6f s)\n", tempoMs, tempoMs / 1000.0);
+    printf("\n\nTempo de execução: %.4f ms (%.6f s)\n", tempoMs, tempoMs / 1000.0);
+
+    // TODO - Adicionar quantidade de trocas/processamentos até o fim da ordenação
+    // TODO - Adicionar funcionalidade de exportação das métricas de ordenação para o excel dentro do respositório
 
     free(array);
     array = NULL;

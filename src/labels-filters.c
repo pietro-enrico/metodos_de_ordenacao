@@ -3,7 +3,6 @@
 #include "headers/menu.h"
 #include "headers/labels-filters.h"
 
-
 const char* formatarLabelAlgoritmo(Algoritmo tipo_algoritmo) {
     switch (tipo_algoritmo) {
         case BUBBLE_SORT:
@@ -39,7 +38,7 @@ const char* formatarLabelDisposicao(Disposicao disposicao) {
             return "Crescente";
             break;
         case DECRESCENTE:
-            return "Descrecente";
+            return "Decrescente";
             break;
         case ALEATORIO:
             return "Aleatório";

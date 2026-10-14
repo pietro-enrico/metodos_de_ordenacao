@@ -51,15 +51,15 @@ static void mergeSortRecursivo(int array[], int auxiliar[], int inicio, int fim)
 }
 
 // Ordena o array recebido do menu (in-place, em ordem crescente)
-void mergeSort(int array[], int tamanho)
+int* mergeSort(int array[], int tamanho)
 {
     if (array == NULL || tamanho < 2)
     {
-        return;
+        return array;
     }
 
     // Vetor auxiliar alocado uma única vez e reaproveitado em todas as intercalações
-    int *auxiliar = (int *)malloc(tamanho * sizeof(int));
+    int *auxiliar = (int *) malloc(tamanho * sizeof(int));
 
     if (auxiliar == NULL)
     {
@@ -71,4 +71,6 @@ void mergeSort(int array[], int tamanho)
 
     free(auxiliar);
     auxiliar = NULL;
+
+    return array;
 }
