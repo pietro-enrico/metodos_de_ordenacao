@@ -16,12 +16,34 @@ static void formatarDecimal(char *destino, size_t capacidade, double valor) {
     }
 }
 
+static int converterCaminho(const char *origem, wchar_t *destino, int capacidade) {
+    int resultado = MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS, origem,-1, destino,capacidade);
+
+    return resultado != 0;
+}
+
 // Acrescenta uma linha com as métricas da ordenação no CSV (abre direto no Excel)
 // Retorna 1 em caso de sucesso e 0 em caso de erro
-int exportarMetricas(const OpcoesMenu *opcoesMenu, Metricas metricas) {
-    CreateDirectoryA(DIRETORIO_RESULTADOS, NULL);
+    int exportarMetricas(const OpcoesMenu *opcoesMenu, Metricas metricas) {
+    wchar_t diretorio[MAX_PATH];
+    wchar_t caminhoArquivo[MAX_PATH];
 
-    FILE *arquivo = fopen(ARQUIVO_METRICAS, "ab");
+    if (!converterCaminho(DIRETORIO_RESULTADOS, diretorio, MAX_PATH) ||
+      !converterCaminho(ARQUIVO_METRICAS, caminhoArquivo, MAX_PATH)) {
+        printf("Erro ao converter o caminho para UTF-16.\n");
+        return 0;
+      }
+
+    if (!CreateDirectoryW(diretorio, NULL)) {
+        DWORD erro = GetLastError();
+
+        if (erro != ERROR_ALREADY_EXISTS) {
+            printf("Erro ao criar diretorio: %lu\n", erro);
+            return 0;
+        }
+    }
+
+    FILE *arquivo = _wfopen(caminhoArquivo, L"ab");
 
     if (arquivo == NULL) {
         printf("\nErro ao abrir o arquivo de métricas: %s\n", ARQUIVO_METRICAS);

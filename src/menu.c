@@ -243,8 +243,6 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
         printf("\nMétricas exportadas para: %s\n", ARQUIVO_METRICAS);
     }
 
-    // TODO(13/10/2026) - Adicionar quantidade de trocas/processamentos até o fim da ordenação -- Fase de Testes
-
     free(array);
     array = NULL;
 
