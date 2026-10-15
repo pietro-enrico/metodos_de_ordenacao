@@ -18,6 +18,6 @@ typedef enum
     CONVEXA
 } Disposicao;
 
-int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao);
+long long *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao);
 
 #endif //METODOS_DE_ORDENACAO_ARRAY_H
