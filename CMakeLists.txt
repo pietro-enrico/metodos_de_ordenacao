@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(metodos_de_ordenacao
         main.c
         src/array.c
+        src/export.c
         src/labels-filters.c
         src/menu.c
         src/metrics.c
@@ -13,9 +14,13 @@ add_executable(metodos_de_ordenacao
         src/algoritmos/merge-sort.c
         src/algoritmos/quick-sort.c
         src/headers/array.h
+        src/headers/export.h
         src/headers/labels-filters.h
         src/headers/menu.h
         src/headers/metrics.h
 )
+
+# Caminho do repositório, usado para exportar as métricas em resultados/metricas.csv
+target_compile_definitions(metodos_de_ordenacao PRIVATE DIRETORIO_PROJETO="${CMAKE_SOURCE_DIR}")
 
 add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8>" "$<$<CXX_COMPILER_ID:GNU>:-fexec-charset=UTF-8>")

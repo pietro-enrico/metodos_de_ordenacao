@@ -1,0 +1,12 @@
+﻿Data/Hora;Algoritmo;Quantidade de Números;Duplicidade;Disposição;Tempo (ms);Comparações;Movimentações;Trocas
+14/10/2026 23:30:23;Merge Sort;10000;Sim;Crescente;0,3557;69008;267232;0
+14/10/2026 23:30:23;Merge Sort;10000;Não;Crescente;0,3376;69008;267232;0
+14/10/2026 23:30:23;Merge Sort;10000;Sim;Decrescente;0,4441;65247;267232;0
+14/10/2026 23:30:23;Merge Sort;10000;Não;Decrescente;0,4213;64608;267232;0
+14/10/2026 23:30:23;Merge Sort;10000;Sim;Aleatório;0,7809;120488;267232;0
+14/10/2026 23:30:24;Merge Sort;10000;Não;Aleatório;0,7882;120492;267232;0
+14/10/2026 23:30:24;Merge Sort;10000;Sim;Côncava;0,4470;72109;267232;0
+14/10/2026 23:30:24;Merge Sort;10000;Não;Côncava;0,4255;71806;267232;0
+14/10/2026 23:30:24;Merge Sort;10000;Sim;Convexa;0,4715;72102;267232;0
+14/10/2026 23:30:25;Merge Sort;10000;Não;Convexa;0,4288;71809;267232;0
+14/10/2026 23:30:25;Merge Sort;1000000;Sim;Crescente;47,4820;10066432;39902848;0

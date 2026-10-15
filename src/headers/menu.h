@@ -18,9 +18,9 @@ typedef struct OpcoesMenu {
 } OpcoesMenu;
 
 // Algoritmos de Ordenação
-int* bubbleSort(int array[], int tamanho);
-int* mergeSort(int array[], int tamanho);
-int* quickSort(int array[], int tamanho);
+long long* bubbleSort(long long array[], int tamanho);
+long long* mergeSort(long long array[], int tamanho);
+long long* quickSort(long long array[], int tamanho);
 
 int menuMain(void);
 void limparTela();

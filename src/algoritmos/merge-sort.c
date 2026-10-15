@@ -5,7 +5,7 @@
 #include "../headers/metrics.h"
 
 // Intercala as metades já ordenadas array[inicio..meio] e array[meio+1..fim]
-static void intercalar(int array[], int auxiliar[], int inicio, int meio, int fim)
+static void intercalar(long long array[], long long auxiliar[], int inicio, int meio, int fim)
 {
     int i = inicio;
     int j = meio + 1;
@@ -21,7 +21,9 @@ static void intercalar(int array[], int auxiliar[], int inicio, int meio, int fi
         }
         else
         {
+            // Elemento da metade direita passa na frente da esquerda: conta como troca de posição
             auxiliar[k++] = array[j++];
+            registrarTroca();
         }
         registrarMovimentacao(1);
     }
@@ -38,13 +40,13 @@ static void intercalar(int array[], int auxiliar[], int inicio, int meio, int fi
         registrarMovimentacao(1);
     }
 
-    memcpy(&array[inicio], &auxiliar[inicio], (fim - inicio + 1) * sizeof(int));
+    memcpy(&array[inicio], &auxiliar[inicio], (fim - inicio + 1) * sizeof(long long));
 
     registrarMovimentacao((unsigned long long)(fim - inicio + 1));
 }
 
 // Divide recursivamente o intervalo array[inicio..fim] e intercala as metades
-static void mergeSortRecursivo(int array[], int auxiliar[], int inicio, int fim)
+static void mergeSortRecursivo(long long array[], long long auxiliar[], int inicio, int fim)
 {
     if (inicio >= fim)
     {
@@ -59,7 +61,7 @@ static void mergeSortRecursivo(int array[], int auxiliar[], int inicio, int fim)
 }
 
 // Ordena o array recebido do menu (in-place, em ordem crescente)
-int* mergeSort(int array[], int tamanho)
+long long* mergeSort(long long array[], int tamanho)
 {
     if (array == NULL || tamanho < 2)
     {
@@ -67,7 +69,7 @@ int* mergeSort(int array[], int tamanho)
     }
 
     // Vetor auxiliar alocado uma única vez e reaproveitado em todas as intercalações
-    int *auxiliar = (int *) malloc(tamanho * sizeof(int));
+    long long *auxiliar = (long long *) malloc(tamanho * sizeof(long long));
 
     if (auxiliar == NULL)
     {

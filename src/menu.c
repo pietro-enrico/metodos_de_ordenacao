@@ -5,6 +5,7 @@
 #include "headers/menu.h"
 #include "headers/labels-filters.h"
 #include "headers/metrics.h"
+#include "headers/export.h"
 
 static int opcao;
 
@@ -23,10 +24,10 @@ void limparTela() {
     system("@cls || clear");
 }
 
-static void imprimirArrayOrdenado(const int * array, int tamanho_array) {
+static void imprimirArrayOrdenado(const long long * array, int tamanho_array) {
     limparTela();
 
-    size_t capacidade = (size_t)tamanho_array * 12 + 4;
+    size_t capacidade = (size_t)tamanho_array * 24 + 4;
     char *buffer = malloc(capacidade);
 
     if (buffer == NULL)
@@ -44,7 +45,7 @@ static void imprimirArrayOrdenado(const int * array, int tamanho_array) {
         posicao += snprintf(
             buffer + posicao,
             capacidade - posicao,
-            "%d%s",
+            "%lld%s",
             array[i],
             i < tamanho_array - 1 ? ", " : " "
         );
@@ -205,7 +206,7 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
             return 0;
     }
 
-    int *array = gerarArray(opcoesMenu->tamanho, opcoesMenu->duplicidade, opcoesMenu->disposicao);
+    long long *array = gerarArray(opcoesMenu->tamanho, opcoesMenu->duplicidade, opcoesMenu->disposicao);
 
     // Métrica: mede a quantidade de operações realizadas para ordernar e o tempo de execução do algoritmo de ordenação
     iniciarMetrificacao();
@@ -238,9 +239,11 @@ int menuPasso4(OpcoesMenu *opcoesMenu) {
     printf("\nQuantidade de Movimentações: %llu", metricas.movimentacoes);
     printf("\nQuantidade de Trocas: %llu\n", metricas.trocas);
 
+    if (exportarMetricas(opcoesMenu, metricas)) {
+        printf("\nMétricas exportadas para: %s\n", ARQUIVO_METRICAS);
+    }
+
     // TODO(13/10/2026) - Adicionar quantidade de trocas/processamentos até o fim da ordenação -- Fase de Testes
-    // TODO(13/10/2026) - Adicionar funcionalidade de exportação das métricas de ordenação para o excel dentro do respositório
-    // TODO(14/10/2026) - Trocar ints para unsigned long long, com maior capacidade de bytes • unsigned long long (64 bits sem sinal): 18.446.744.073.709.551.615 (ULLONG_MAX)
 
     free(array);
     array = NULL;

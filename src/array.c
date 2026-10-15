@@ -7,7 +7,7 @@
 #include "headers/array.h"
 
 // Verifica se um número já existe no array
-bool numeroExiste(int array[], int tamanho, int numero)
+bool numeroExiste(long long array[], int tamanho, long long numero)
 {
     for (int i = 0; i < tamanho; i++)
     {
@@ -21,7 +21,7 @@ bool numeroExiste(int array[], int tamanho, int numero)
 }
 
 // Gera um número com uma distribuição melhor de magnitudes (pequenos, médios e grandes)
-int gerarNumeroMisto()
+long long gerarNumeroMisto()
 {
     int categoria = rand() % 100;
 
@@ -35,9 +35,9 @@ int gerarNumeroMisto()
 }
 
 // Gera um número que ainda não existe no array
-int gerarNumeroUnico(int array[], int tamanho)
+long long gerarNumeroUnico(long long array[], int tamanho)
 {
-    int numero;
+    long long numero;
 
     do
     {
@@ -49,7 +49,7 @@ int gerarNumeroUnico(int array[], int tamanho)
 }
 
 // Função principal de geração
-int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
+long long *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
 {
     static bool inicializado = false;
 
@@ -66,7 +66,7 @@ int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
         exit(EXIT_FAILURE);
     }
 
-    int *array = (int *)malloc(tamanho * sizeof(int));
+    long long *array = (long long *)malloc(tamanho * sizeof(long long));
 
     if (array == NULL)
     {
@@ -109,7 +109,7 @@ int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
                     // INSTEAD OF: array[i] = tamanho * 20;
                     // Add some randomness to the starting value for the descending array
                     // so it's not always the exact same sequence.
-                    array[i] = (tamanho * 20) + (rand() % (tamanho * 5 + 1));
+                    array[i] = ((long long)tamanho * 20) + (rand() % (tamanho * 5 + 1));
                 }
                 else
                 {
@@ -160,7 +160,7 @@ int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
                 // 0 -> 1.000.000 -> 0
                 double formato = 4.0 * x * (1.0 - x);
 
-                array[i] = (int)(formato * 1000000);
+                array[i] = (long long)(formato * 1000000);
 
                 if (duplicidade && i > 0 && rand() % 100 < CHANCE_DUPLICIDADE)
                 {
@@ -187,7 +187,7 @@ int *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
                 // 1.000.000 -> 0 -> 1.000.000
                 double formato = 4.0 * (x - 0.5) * (x - 0.5);
 
-                array[i] = (int)(formato * 1000000);
+                array[i] = (long long)(formato * 1000000);
 
                 if (duplicidade && i > 0 && rand() % 100 < CHANCE_DUPLICIDADE)
                 {
