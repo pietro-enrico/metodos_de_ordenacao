@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(metodos_de_ordenacao
         main.c
         src/core/array.c
-        src/interface/labels-filters.c
+        src/interface/formatacao-rotulos.c
         src/interface/menu.c
         src/metricas/exportacao.c
         src/metricas/metricas.c

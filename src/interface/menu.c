@@ -3,7 +3,7 @@
 #include <windows.h>
 
 #include "menu.h"
-#include "labels-filters.h"
+#include "formatacao-rotulos.h"
 #include "metricas.h"
 #include "exportacao.h"
 
