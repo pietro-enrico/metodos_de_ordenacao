@@ -1,0 +1,92 @@
+# Converte caminhos longos (UTF-8/acentos) para 8.3 ASCII nos arquivos do MinGW Make.
+
+set(_src_long_cmake [=[@_METODOS_SRC_LONG_CMAKE@]=])
+set(_bin_long_cmake [=[@_METODOS_BIN_LONG_CMAKE@]=])
+set(_src_long_native [=[@_METODOS_SRC_LONG_NATIVE@]=])
+set(_bin_long_native [=[@_METODOS_BIN_LONG_NATIVE@]=])
+set(_src_short_cmake [=[@_METODOS_SRC_SHORT_CMAKE@]=])
+set(_bin_short_cmake [=[@_METODOS_BIN_SHORT_CMAKE@]=])
+set(_src_short [=[@_METODOS_SRC_SHORT@]=])
+set(_bin_short [=[@_METODOS_BIN_SHORT@]=])
+set(_bin [=[@CMAKE_BINARY_DIR@]=])
+
+# Espaco escapado pelo Make (Jose\ Henrique)
+string(REPLACE " " "\\ " _src_long_cmake_esc "${_src_long_cmake}")
+string(REPLACE " " "\\ " _bin_long_cmake_esc "${_bin_long_cmake}")
+string(REPLACE " " "\\ " _src_long_native_esc "${_src_long_native}")
+string(REPLACE " " "\\ " _bin_long_native_esc "${_bin_long_native}")
+
+# Pares long->short (cmake / native / escaped)
+set(_raw_from
+  "${_src_long_cmake_esc}" "${_bin_long_cmake_esc}"
+  "${_src_long_native_esc}" "${_bin_long_native_esc}"
+  "${_src_long_cmake}" "${_bin_long_cmake}"
+  "${_src_long_native}" "${_bin_long_native}"
+)
+set(_raw_to
+  "${_src_short_cmake}" "${_bin_short_cmake}"
+  "${_src_short}" "${_bin_short}"
+  "${_src_short_cmake}" "${_bin_short_cmake}"
+  "${_src_short}" "${_bin_short}"
+)
+
+# Gera variantes com / e \ para cada par
+set(_from_list "")
+set(_to_list "")
+list(LENGTH _raw_from _n)
+math(EXPR _last "${_n} - 1")
+foreach(_i RANGE ${_last})
+  list(GET _raw_from ${_i} _f)
+  list(GET _raw_to ${_i} _t)
+  if(NOT _f OR NOT _t OR _f STREQUAL _t)
+    continue()
+  endif()
+  string(REPLACE "\\" "/" _f_fwd "${_f}")
+  string(REPLACE "/" "\\" _f_bwd "${_f}")
+  string(REPLACE "\\" "/" _t_fwd "${_t}")
+  string(REPLACE "/" "\\" _t_bwd "${_t}")
+  list(APPEND _from_list "${_f}" "${_f_fwd}" "${_f_bwd}")
+  list(APPEND _to_list "${_t}" "${_t_fwd}" "${_t_bwd}")
+endforeach()
+
+set(_targets
+  "${_bin}/Makefile"
+  "${_bin}/makefile"
+  "${_bin}/CMakeFiles/Makefile2"
+  "${_bin}/CMakeFiles/Makefile.cmake"
+  "${_bin}/CMakeFiles/TargetDirectories.txt"
+  "${_bin}/cmake_install.cmake"
+)
+
+file(GLOB_RECURSE _extra
+  "${_bin}/CMakeFiles/*.make"
+  "${_bin}/CMakeFiles/*/DependInfo.cmake"
+  "${_bin}/CMakeFiles/*/build.make"
+  "${_bin}/CMakeFiles/*/link.txt"
+  "${_bin}/CMakeFiles/*/flags.make"
+  "${_bin}/CMakeFiles/*/*.rsp"
+)
+
+list(APPEND _targets ${_extra})
+list(REMOVE_DUPLICATES _targets)
+
+list(LENGTH _from_list _n)
+math(EXPR _last "${_n} - 1")
+
+foreach(_file IN LISTS _targets)
+  if(NOT EXISTS "${_file}")
+    continue()
+  endif()
+  file(READ "${_file}" _content)
+  set(_new "${_content}")
+  foreach(_i RANGE ${_last})
+    list(GET _from_list ${_i} _from)
+    list(GET _to_list ${_i} _to)
+    if(_from AND _to AND NOT _from STREQUAL _to)
+      string(REPLACE "${_from}" "${_to}" _new "${_new}")
+    endif()
+  endforeach()
+  if(NOT _new STREQUAL _content)
+    file(WRITE "${_file}" "${_new}")
+  endif()
+endforeach()

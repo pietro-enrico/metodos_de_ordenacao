@@ -1,0 +1,18 @@
+@echo off
+REM Normaliza paths UTF-8 -> 8.3 ASCII e chama mingw32-make.
+setlocal
+set "REAL_MAKE=@_METODOS_REAL_MAKE@"
+set "CMAKE_CMD=@CMAKE_COMMAND@"
+set "BUILD_DIR=@_METODOS_BIN_SHORT@"
+set "FIX_SCRIPT=%BUILD_DIR%\fix_mingw_utf8_paths.cmake"
+
+cd /d "%BUILD_DIR%"
+if errorlevel 1 exit /b 1
+
+if exist "%FIX_SCRIPT%" (
+  "%CMAKE_CMD%" -P "%FIX_SCRIPT%"
+  if errorlevel 1 exit /b 1
+)
+
+"%REAL_MAKE%" %*
+exit /b %ERRORLEVEL%

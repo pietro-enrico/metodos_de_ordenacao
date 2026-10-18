@@ -3,6 +3,9 @@ project(metodos_de_ordenacao C)
 
 set(CMAKE_C_STANDARD 11)
 
+# MinGW Makefiles + caminho com acentos (UTF-8): normaliza paths antes do make
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/habilitar_mingw_utf8.cmake")
+
 add_executable(metodos_de_ordenacao
         main.c
         src/core/array.c
@@ -20,7 +23,8 @@ target_include_directories(metodos_de_ordenacao
         ${CMAKE_CURRENT_SOURCE_DIR}/headers
 )
 
-# Caminho do repositório, usado para exportar as métricas em resultados/metricas.csv
+# Caminho do repositório em UTF-8 (exportacao.c converte para UTF-16 no Windows)
 target_compile_definitions(metodos_de_ordenacao PRIVATE DIRETORIO_PROJETO="${CMAKE_SOURCE_DIR}")
 
-add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8>" "$<$<CXX_COMPILER_ID:GNU>:-fexec-charset=UTF-8>")
+# Charset UTF-8 no GCC (projeto C — usar C_COMPILER_ID, nao CXX)
+add_compile_options("$<$<C_COMPILER_ID:GNU>:-finput-charset=UTF-8>" "$<$<C_COMPILER_ID:GNU>:-fexec-charset=UTF-8>")
