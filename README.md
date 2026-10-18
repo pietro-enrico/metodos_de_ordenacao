@@ -69,7 +69,21 @@ cmake --build cmake-build-debug
 
 No Windows, o executável normalmente será gerado dentro de `cmake-build-debug/`, com o nome `metodos_de_ordenacao.exe`.
 
-Para executá-lo pelo terminal do Windows:
+### Configuração do terminal no CLion
+
+Para que o programa interaja corretamente com o usuário pelo console, habilite a opção **Emulate terminal in the output console**:
+
+1. Na barra superior do CLion, abra o menu de configurações da execução, clicando nos três pontos (`⁝`) ao lado da configuração atual.
+2. Selecione **Edit**.
+3. Na janela **Run/Debug Configurations**, localize a configuração `metodos_de_ordenacao`.
+4. Marque a opção **Emulate terminal in the output console**.
+5. Clique em **Apply** e depois em **OK**.
+
+Essa configuração permite emular um terminal na janela de saída do CLion, o que pode ser útil para programas que utilizam menus interativos e entrada de dados pelo teclado.
+
+### Execução pelo terminal
+
+No PowerShell, execute:
 
 ```powershell
 .\cmake-build-debug\metodos_de_ordenacao.exe
@@ -91,11 +105,11 @@ Mais do que implementar algoritmos conhecidos, este projeto busca compreender co
 
 Ao variar o tamanho e a disposição dos dados, é possível observar diferenças de desempenho e relacioná-las à lógica de cada algoritmo.
 
-## Autor
+## Autores
 
-R583970	Fernanda Brezolino Neves Gomes<br>
-F3623A6	José Henrique Lima Alves<br>
-H7642E0	Matheus Almeida Aguirra<br>
-R8475H1	Pietro Enrico Fernandes Silva<br>
+- R583970 — Fernanda Brezolino Neves Gomes
+- F3623A6 — José Henrique Lima Alves
+- H7642E0 — Matheus Almeida Aguirra
+- R8475H1 — Pietro Enrico Fernandes Silva
 
 Projeto desenvolvido como parte dos estudos de programação em linguagem C, com foco em algoritmos, estruturas de dados e análise de desempenho.
