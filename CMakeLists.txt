@@ -5,19 +5,19 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(metodos_de_ordenacao
         main.c
-        src/array.c
-        src/export.c
-        src/labels-filters.c
-        src/menu.c
-        src/metrics.c
+        src/core/array.c
+        src/interface/labels-filters.c
+        src/interface/menu.c
+        src/metricas/exportacao.c
+        src/metricas/metricas.c
         src/algoritmos/bubble-sort.c
         src/algoritmos/merge-sort.c
         src/algoritmos/quick-sort.c
-        headers/array.h
-        headers/export.h
-        headers/labels-filters.h
-        headers/menu.h
-        headers/metrics.h
+)
+
+target_include_directories(metodos_de_ordenacao
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/headers
 )
 
 # Caminho do repositório, usado para exportar as métricas em resultados/metricas.csv

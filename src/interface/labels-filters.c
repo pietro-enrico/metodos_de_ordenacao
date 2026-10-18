@@ -1,5 +1,5 @@
-#include "../headers/menu.h"
-#include "../headers/labels-filters.h"
+#include "menu.h"
+#include "labels-filters.h"
 
 const char* formatarLabelAlgoritmo(Algoritmo tipo_algoritmo) {
     switch (tipo_algoritmo) {

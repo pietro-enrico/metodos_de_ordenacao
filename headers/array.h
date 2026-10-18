@@ -1,5 +1,6 @@
 #ifndef METODOS_DE_ORDENACAO_ARRAY_H
 #define METODOS_DE_ORDENACAO_ARRAY_H
+
 #include <stdbool.h>
 
 // Chance (em %) de repetir o valor anterior nas disposições CRESCENTE e DECRESCENTE

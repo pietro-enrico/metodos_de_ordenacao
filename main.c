@@ -1,6 +1,6 @@
 #include <windows.h>
 
-#include "./headers/menu.h"
+#include "menu.h"
 
 int main() {
     // Configura o console do Windows para exibir e ler caracteres em UTF-8
