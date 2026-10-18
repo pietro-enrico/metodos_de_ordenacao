@@ -2,8 +2,8 @@
 #include <time.h>
 #include <windows.h>
 
-#include "headers/export.h"
-#include "headers/labels-filters.h"
+#include "../headers/export.h"
+#include "../headers/labels-filters.h"
 
 // Formata o double com vírgula decimal (padrão do Excel em português)
 static void formatarDecimal(char *destino, size_t capacidade, double valor) {

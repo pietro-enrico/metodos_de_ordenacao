@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-#include "headers/array.h"
+#include "../headers/array.h"
 
 // Verifica se um número já existe no array
 bool numeroExiste(long long array[], int tamanho, long long numero)

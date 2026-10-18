@@ -13,11 +13,11 @@ add_executable(metodos_de_ordenacao
         src/algoritmos/bubble-sort.c
         src/algoritmos/merge-sort.c
         src/algoritmos/quick-sort.c
-        src/headers/array.h
-        src/headers/export.h
-        src/headers/labels-filters.h
-        src/headers/menu.h
-        src/headers/metrics.h
+        headers/array.h
+        headers/export.h
+        headers/labels-filters.h
+        headers/menu.h
+        headers/metrics.h
 )
 
 # Caminho do repositório, usado para exportar as métricas em resultados/metricas.csv

@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <windows.h>
 
-#include "headers/menu.h"
-#include "headers/labels-filters.h"
-#include "headers/metrics.h"
-#include "headers/export.h"
+#include "../headers/menu.h"
+#include "../headers/labels-filters.h"
+#include "../headers/metrics.h"
+#include "../headers/export.h"
 
 static int opcao;
 

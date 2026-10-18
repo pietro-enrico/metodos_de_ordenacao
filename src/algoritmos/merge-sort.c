@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../headers/metrics.h"
+#include "../../headers/metrics.h"
 
 // Intercala as metades já ordenadas array[inicio..meio] e array[meio+1..fim]
 static void intercalar(long long array[], long long auxiliar[], int inicio, int meio, int fim)

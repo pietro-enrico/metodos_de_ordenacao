@@ -1,5 +1,5 @@
 #include <windows.h>
-#include "headers/metrics.h"
+#include "../headers/metrics.h"
 
 static LARGE_INTEGER frequencia, inicio, fim;
 static Metricas metricas;

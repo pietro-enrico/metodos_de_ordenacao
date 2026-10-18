@@ -9,7 +9,7 @@
 #define DIRETORIO_PROJETO "."
 #endif
 
-#define DIRETORIO_RESULTADOS DIRETORIO_PROJETO "/resultados"
+#define DIRETORIO_RESULTADOS DIRETORIO_PROJETO "/src/resultados"
 #define ARQUIVO_METRICAS DIRETORIO_RESULTADOS "/metricas.csv"
 
 int exportarMetricas(const OpcoesMenu *opcoesMenu, Metricas metricas);
