@@ -5,18 +5,10 @@
 
 #include "array.h"
 
-// Verifica se um número já existe no array
-bool numeroExiste(long long array[], int tamanho, long long numero)
+// Gera um inteiro aleatório de 30 bits (no MinGW o RAND_MAX é 32767, apenas 15 bits)
+static long long randLargo()
 {
-    for (int i = 0; i < tamanho; i++)
-    {
-        if (array[i] == numero)
-        {
-            return true;
-        }
-    }
-
-    return false;
+    return ((long long)(rand() & 0x7FFF) << 15) | (rand() & 0x7FFF);
 }
 
 // Gera um número com uma distribuição melhor de magnitudes (pequenos, médios e grandes)
@@ -25,26 +17,34 @@ long long gerarNumeroMisto()
     int categoria = rand() % 100;
 
     if (categoria < 30) {
-        return rand() % QTD_NUMEROS_PEQUENOS;      // 30% de chance para números pequenos (0 a 999)
+        return randLargo() % QTD_NUMEROS_PEQUENOS;      // 30% de chance para números pequenos (0 a 999)
     } else if (categoria < 70) {
-        return rand() % QTD_NUMEROS_MEDIOS;    // 40% de chance para números médios (0 a 99.999)
+        return randLargo() % QTD_NUMEROS_MEDIOS;    // 40% de chance para números médios (0 a 99.999)
     } else {
-        return rand() % QTD_NUMEROS_GRANDES;   // 30% de chance para números grandes (0 a 999.999)
+        return randLargo() % QTD_NUMEROS_GRANDES;   // 30% de chance para números grandes (0 a 999.999)
     }
 }
 
-// Gera um número que ainda não existe no array
-long long gerarNumeroUnico(long long array[], int tamanho)
+// Preenche o array com números únicos em ordem aleatória - O(n), sem busca por repetidos
+static void gerarNumerosUnicos(long long array[], int tamanho)
 {
-    long long numero;
+    // Valores distintos por construção: cada um é maior que o anterior
+    array[0] = rand() % 100;
 
-    do
+    for (int i = 1; i < tamanho; i++)
     {
-        numero = gerarNumeroMisto();
+        array[i] = array[i - 1] + (rand() % 20 + 1);
     }
-    while (numeroExiste(array, tamanho, numero));
 
-    return numero;
+    // Embaralhamento de Fisher-Yates
+    for (int i = tamanho - 1; i > 0; i--)
+    {
+        int j = (int)(randLargo() % (i + 1));
+
+        long long temporaria = array[i];
+        array[i] = array[j];
+        array[j] = temporaria;
+    }
 }
 
 // Função principal de geração
@@ -128,16 +128,16 @@ long long *gerarArray(int tamanho, bool duplicidade, Disposicao disposicao)
             break;
 
         case ALEATORIO:
-            for (int i = 0; i < tamanho; i++)
+            if (duplicidade)
             {
-                if (duplicidade)
+                for (int i = 0; i < tamanho; i++)
                 {
                     array[i] = gerarNumeroMisto();
                 }
-                else
-                {
-                    array[i] = gerarNumeroUnico(array, i);
-                }
+            }
+            else
+            {
+                gerarNumerosUnicos(array, tamanho);
             }
 
             break;

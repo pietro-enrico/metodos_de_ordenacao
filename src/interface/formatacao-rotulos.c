@@ -13,7 +13,7 @@ const char* formatarLabelAlgoritmo(Algoritmo tipo_algoritmo) {
             return "Quick Sort";
             break;
         default:
-            return "Algortimo Desconhecido";
+            return "Algorítmo Desconhecido";
     }
 }
 
