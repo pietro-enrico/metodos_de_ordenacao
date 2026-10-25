@@ -8,53 +8,68 @@ A proposta é implementar os algoritmos, testar seu comportamento com diferentes
 
 O projeto reúne três algoritmos de ordenação:
 
-- **Bubble Sort:** compara elementos adjacentes e realiza trocas até que o array esteja ordenado.
+- **Bubble Sort (em desenvolvimento):** compara elementos adjacentes e realiza trocas até que o array esteja ordenado.
 - **Merge Sort:** divide o array em partes menores, ordena essas partes e depois as combina.
 - **Quick Sort:** utiliza um pivô para particionar o array e ordenar seus elementos recursivamente.
 
-Além da implementação dos algoritmos, o programa permite configurar os dados utilizados nos testes e registrar os resultados das execuções.
+Além da implementação dos algoritmos, o programa permite configurar os dados utilizados nos testes e registrar os resultados de cada execução.
 
 ## Funcionalidades
 
-- Geração de arrays com diferentes tamanhos e disposições.
-- Configuração da presença de elementos duplicados.
-- Execução dos algoritmos de ordenação disponíveis.
-- Medição do tempo de execução.
-- Registro das métricas em um arquivo CSV.
-- Organização do código em módulos para facilitar a manutenção e a evolução do projeto.
+- Menu interativo no terminal, organizado em quatro passos.
+- Geração de arrays de números inteiros (`long long`) com tamanho configurável.
+- Opção de gerar o array com ou sem números duplicados.
+- Cinco disposições de dados: crescente, decrescente, aleatória, côncava e convexa.
+- Medição do tempo de execução com temporizador de alta precisão.
+- Contagem de comparações, movimentações e trocas realizadas por cada algoritmo.
+- Exportação automática das métricas para um arquivo CSV compatível com o Excel.
 
 ## Tecnologias utilizadas
 
-- **Linguagem:** C
-- **Padrão:** C11
+- **Linguagem:** C (padrão C11)
 - **Build:** CMake
+- **Compilador:** GCC (MinGW)
 - **Ambiente de desenvolvimento:** CLion
+- **Bibliotecas:** apenas a biblioteca padrão da linguagem C e a API do Windows (Win32). Nenhuma biblioteca de terceiros é utilizada.
+
+### Uso da biblioteca padrão e da API do Windows
+
+| Recurso | Origem | Finalidade |
+|---|---|---|
+| `fprintf`, `fputs` (`stdio.h`) | Biblioteca padrão C | Escrita dos registros no arquivo CSV |
+| `time`, `strftime` (`time.h`) | Biblioteca padrão C | Data e hora de cada execução |
+| `QueryPerformanceCounter` | API do Windows | Medição do tempo de execução com alta precisão |
+| `SetConsoleOutputCP`, `SetConsoleCP` | API do Windows | Exibição e leitura de acentos no terminal (UTF-8) |
+| `MultiByteToWideChar` | API do Windows | Conversão do caminho do arquivo para UTF-16, permitindo pastas com acentos e espaços |
+| `CreateDirectoryW` | API do Windows | Criação automática da pasta de resultados |
+| `_wfopen` | Runtime C da Microsoft | Abertura do arquivo CSV com caminho Unicode |
+
+> Por depender da API do Windows, o projeto deve ser compilado e executado no **Windows**.
 
 ## Estrutura do projeto
 
 ```text
 metodos_de_ordenacao/
-├── headers/              # Arquivos de cabeçalho
+├── cmake/                    # Scripts auxiliares do CMake (suporte a caminhos com acentos no MinGW)
+├── headers/                  # Arquivos de cabeçalho (.h)
 ├── src/
-│   ├── algoritmos/       # Implementações dos algoritmos
-│   ├── core/             # Funcionalidades centrais
-│   ├── interface/        # Menu e interação com o usuário
-│   └── metricas/         # Medição e exportação dos resultados
-├── main.c                # Ponto de entrada do programa
-├── CMakeLists.txt        # Configuração da compilação
+│   ├── algoritmos/           # Bubble Sort, Merge Sort e Quick Sort
+│   ├── core/                 # Geração dos arrays
+│   ├── interface/            # Menu e formatação dos rótulos exibidos
+│   └── metricas/             # Medição e exportação das métricas
+│       └── resultados/       # Arquivo metricas.csv gerado pelo programa
+├── main.c                    # Ponto de entrada do programa
+├── CMakeLists.txt            # Configuração da compilação
 ├── README.md
 └── .gitignore
 ```
-
-Os resultados das execuções são armazenados em um arquivo CSV no diretório configurado para as métricas.
 
 ## Como executar
 
 ### Pré-requisitos
 
-Antes de começar, você precisa ter instalado:
-
-- Um compilador C compatível com o padrão C11, como GCC ou MinGW.
+- Windows.
+- Um compilador C compatível com o padrão C11, como o GCC do MinGW.
 - CMake.
 - CLion ou outro ambiente capaz de configurar e compilar projetos C com CMake.
 
@@ -67,7 +82,9 @@ cmake -S . -B cmake-build-debug
 cmake --build cmake-build-debug
 ```
 
-No Windows, o executável normalmente será gerado dentro de `cmake-build-debug/`, com o nome `metodos_de_ordenacao.exe`.
+O executável será gerado dentro de `cmake-build-debug/`, com o nome `metodos_de_ordenacao.exe`.
+
+Caso o projeto esteja em uma pasta cujo caminho tenha acentos, o CMake ajusta os caminhos automaticamente para que o MinGW consiga compilar.
 
 ### Configuração do terminal no CLion
 
@@ -79,7 +96,7 @@ Para que o programa interaja corretamente com o usuário pelo console, habilite 
 4. Marque a opção **Emulate terminal in the output console**.
 5. Clique em **Apply** e depois em **OK**.
 
-Essa configuração permite emular um terminal na janela de saída do CLion, o que pode ser útil para programas que utilizam menus interativos e entrada de dados pelo teclado.
+Essa configuração permite emular um terminal na janela de saída do CLion, o que é necessário para o menu interativo e a entrada de dados pelo teclado.
 
 ### Execução pelo terminal
 
@@ -91,19 +108,63 @@ No PowerShell, execute:
 
 Se estiver utilizando o CLion, você também pode carregar o projeto pelo `CMakeLists.txt` e executá-lo pela própria IDE.
 
+## Utilização
+
+Ao iniciar, o programa conduz o usuário por quatro passos:
+
+1. **Algoritmo:** Bubble Sort, Merge Sort ou Quick Sort.
+2. **Tamanho do array:** 1.000, 5.000, 10.000, 100.000 ou um valor personalizado.
+3. **Duplicidade:** gerar o array com ou sem números repetidos.
+4. **Disposição:** crescente, decrescente, aleatória, côncava ou convexa.
+
+Em seguida, o array é gerado e ordenado. O programa exibe o array ordenado, as configurações escolhidas e as métricas da execução, que também são gravadas no arquivo CSV.
+
+## Métricas coletadas
+
+| Métrica | Descrição |
+|---|---|
+| **Tempo de execução** | Tempo gasto apenas na ordenação, em milissegundos, medido com `QueryPerformanceCounter` |
+| **Comparações** | Quantidade de comparações entre elementos do array |
+| **Movimentações** | Quantidade de escritas de elementos em posições do array ou de arrays auxiliares |
+| **Trocas** | No Quick Sort, quantidade de vezes em que dois elementos trocaram de posição. No Merge Sort, como não há troca direta, conta as vezes em que um elemento da metade direita é posicionado antes dos elementos restantes da metade esquerda |
+
+A geração do array não entra na medição: a contagem começa imediatamente antes da chamada do algoritmo e termina logo após a ordenação.
+
 ## Registro das métricas
 
-Durante os testes, o programa registra os resultados em um arquivo CSV, permitindo consultar e comparar as execuções posteriormente.
+A cada execução, o programa acrescenta uma linha ao arquivo:
 
-O arquivo pode ser aberto em ferramentas como Excel, LibreOffice Calc ou outros programas compatíveis com CSV.
+```text
+src/metricas/resultados/metricas.csv
+```
 
-Para garantir que os resultados sejam salvos corretamente, o diretório de destino precisa existir e o programa deve ter permissão para gravar nele.
+A pasta e o arquivo são criados automaticamente na primeira execução. As execuções seguintes são adicionadas ao final do arquivo, formando um histórico para comparação.
+
+O CSV possui as seguintes colunas:
+
+```text
+Data/Hora;Algoritmo;Quantidade de Números;Duplicidade;Disposição;Tempo (ms);Comparações;Movimentações;Trocas
+```
+
+Exemplo de registro:
+
+```text
+18/10/2026 14:04:54;Merge Sort;1000;Sim;Crescente;0,0790;5044;19952;0
+```
+
+Para abrir diretamente no Excel em português, o arquivo é gerado com:
+
+- codificação **UTF-8 com BOM**, para exibir os acentos corretamente;
+- **ponto e vírgula** (`;`) como separador de colunas;
+- **vírgula** como separador decimal.
+
+O arquivo também pode ser aberto no LibreOffice Calc ou em outros programas compatíveis com CSV.
 
 ## Objetivo acadêmico
 
 Mais do que implementar algoritmos conhecidos, este projeto busca compreender como diferentes estratégias de ordenação se comportam na prática.
 
-Ao variar o tamanho e a disposição dos dados, é possível observar diferenças de desempenho e relacioná-las à lógica de cada algoritmo.
+Ao variar o tamanho, a duplicidade e a disposição dos dados, é possível observar diferenças de desempenho e relacioná-las à lógica e à complexidade de cada algoritmo.
 
 ## Autores
 
