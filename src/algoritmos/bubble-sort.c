@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 long long* bubbleSort(long long array[], int tamanho)
 {
     if (array == NULL || tamanho < 2)
@@ -38,4 +37,4 @@ long long* bubbleSort(long long array[], int tamanho)
     }
 
     return array;
-};
+}

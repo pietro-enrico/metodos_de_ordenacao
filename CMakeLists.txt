@@ -16,8 +16,6 @@ add_executable(metodos_de_ordenacao
         src/algoritmos/bubble-sort.c
         src/algoritmos/merge-sort.c
         src/algoritmos/quick-sort.c
-        src/algoritmos/bubble-sort.c
-        src/algoritmos/bubble-sort.c
 )
 
 target_include_directories(metodos_de_ordenacao
